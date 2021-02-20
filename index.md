@@ -1,3 +1,6 @@
-# Hello there
-
-Setting up this one now ... will take a bit.
+---
+layout: home
+show_excerpts: true
+paginate: true
+entries_layout: list
+---
