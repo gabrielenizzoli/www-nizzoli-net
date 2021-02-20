@@ -15,4 +15,14 @@ google_fonts:
     weights: "400,400i,700,700i"
   - name: "Lora"
     weights: "400,400i,700,700i"
-#theme: jekyll-theme-slate
+
+# Taxonomy pages
+category_archive_path: "/categories/#"
+tag_archive_path: "/tags/#"
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate
+  - jekyll-redirect-from
