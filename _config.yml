@@ -20,6 +20,16 @@ google_fonts:
 category_archive_path: "/categories/#"
 tag_archive_path: "/tags/#"
 
+defaults:
+  # Post defaults
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+      comments: false
+      share: true
+
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
