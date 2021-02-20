@@ -2,4 +2,17 @@ title: Mistakes were made
 description: .... as all can see and I admit it
 
 remote_theme: "mmistakes/so-simple-theme@3.2.0"
+
+date_format: "%B %-d, %Y"
+read_time: true
+words_per_minute: # 200
+mathjax:
+  enable: true
+  combo: "tex-svg"
+  tags: "ams"
+google_fonts:
+  - name: "Source Sans Pro"
+    weights: "400,400i,700,700i"
+  - name: "Lora"
+    weights: "400,400i,700,700i"
 #theme: jekyll-theme-slate
