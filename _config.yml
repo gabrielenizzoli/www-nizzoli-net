@@ -4,7 +4,7 @@ description: .... as all can see and I admit it
 remote_theme: "mmistakes/so-simple-theme@3.2.0"
 
 url: "https://www.nizzoli.net"
-copyright: "&copy; {{ site.time | date: '%Y' }} {{ site.name | default: site.title }}"
+copyright: "&copy; me"
 date_format: "%B %-d, %Y"
 read_time: true
 words_per_minute: # 200
