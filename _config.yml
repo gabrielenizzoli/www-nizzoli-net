@@ -1,8 +1,8 @@
 title: Mistakes were made
 description: .... as all can see and I admit it
 
-# remote_theme: "mmistakes/so-simple-theme@3.2.0"
-remote_theme             : "mmistakes/minimal-mistakes@4.22.0"
+remote_theme: "mmistakes/so-simple-theme@3.2.0"
+#remote_theme             : "mmistakes/minimal-mistakes@4.22.0"
 
 date_format: "%B %-d, %Y"
 read_time: true
