@@ -16,6 +16,10 @@ google_fonts:
   - name: "Lora"
     weights: "400,400i,700,700i"
 
+# Pagination - https://jekyllrb.com/docs/pagination/
+paginate: 10
+paginate_path: /page:num/
+
 # Liquid
 liquid:
   error_mode: strict
@@ -45,3 +49,5 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jekyll-redirect-from
+  - jekyll-paginate
+
