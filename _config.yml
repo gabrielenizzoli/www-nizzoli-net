@@ -7,6 +7,7 @@ url: "https://www.nizzoli.net"
 copyright: "&copy; me"
 date_format: "%B %-d, %Y"
 skin: "/assets/css/skins/dark.css"
+logo: "/images/mars-logo.png"
 read_time: true
 words_per_minute: # 200
 mathjax:
