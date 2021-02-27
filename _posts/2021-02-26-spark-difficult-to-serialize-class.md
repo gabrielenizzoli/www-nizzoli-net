@@ -43,8 +43,12 @@ public class DifficultToSerializeClass {
 ```
 
 ### Workaround
-To make sure we canm carry around in a Spark Dataset, the only thing we need to do is to warp it a class that will take care of transforming our difficult object in a bayte array and back again.
-Such a wrapper will look like this:
+
+To carry around an unserializable type in a Spark Dataset the only thing we need to do is to use a wrapper.
+The wrapper will take care of transforming our troubled object in a byte array.
+This can be achieved by making our wrapper both `Serializable` and also providing 2 methods: `readObject` and `readObject`. These two methods will be use to run around the default Java Serializer behavior and fully take charge of reading and writing the `DifficultToSerializeClass` type.
+
+Such a wrapper, for our silly example, will look like this:
 ```java
 public static class WrapperBean implements Serializable {
 
@@ -55,6 +59,7 @@ public static class WrapperBean implements Serializable {
     }
 
     private void readObject(ObjectInputStream aInputStream) throws ClassNotFoundException, IOException {
+        // stream -> java
         difficultToSerializeObject = new DifficultToSerializeClass(
                 aInputStream.readUTF(),
                 aInputStream.readBoolean()
@@ -62,6 +67,7 @@ public static class WrapperBean implements Serializable {
     }
 
     private void writeObject(ObjectOutputStream aOutputStream) throws IOException {
+        // java -> stream, replace your preferred serializer, like a Proto object serializer
         aOutputStream.writeUTF(difficultToSerializeObject.getValue());
         aOutputStream.writeBoolean(difficultToSerializeObject.isFlag());
     }
