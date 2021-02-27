@@ -7,21 +7,21 @@ tags:
   - java
 ---
 
-HAve an issue with moving around an odd class in anApache Spark Dataset? Here is a practical solution!
+Have an issue with moving around an odd class in an Apache Spark Dataset? Here is a practical solution!
 
 {% include toc %}
 
 ## Problem
 
-In an Apache Spark Dataset, sometimes you need to carry around a Java Class that is difficlut to serialize (eg: a Proto Object) or that you can't simply modify (since it is part of an external package).
+In an Apache Spark Dataset sometimes you *must* carry around a Java Class that is impossible to serialize (eg: a Proto Object) or that you can't simply modify (eg: it is part of an external package).
 You might have tried the Kryo serializer, but with no luck.
 What will help you now is actually the good old Java Serialization, with a little twist!
 
 ## Our Problem class
 
-Let say we have a problem class. 
-This class may be a Proto object class, or something that neither the Kryo nor the Java Serializer likes. 
-In our dummy example we will use the following class, and pretend that we can't serialize it using Kryo (or Java Serialization):
+Let say we have a problem class named `DifficultToSerializeClass`. 
+This class may be a Proto class, or something that neither the Kryo nor the Java Serializer likes. 
+In our example we will use the following class, and pretend that we can't serialize it using Kryo (or Java Serialization):
 ```java
 public class DifficultToSerializeClass {
 
@@ -80,4 +80,36 @@ public static class WrapperBean implements Serializable {
     }
         
 }
+```
+
+## How all will come together
+
+
+Our Apache Spark Dataset will work properly and it will look like this:
+```java
+var ds = sparkSession
+    .createDataset(List.of(
+        new WrapperBean(new DifficultToSerializeClass("one", true)),
+        new WrapperBean(new DifficultToSerializeClass("two", true)),
+        new WrapperBean(new DifficultToSerializeClass("three", false))
+    ), Encoders.javaSerialization(WrapperBean.class));
+```
+
+It can be properly be encoded/decoded. The downside? The dataset will be a byte array if queried, and it will be be a single column named `value`:
+```java
+ds.printSchema();
+ds.show();
+```
+
+```
+root
+ |-- value: binary (nullable = true)
+
++--------------------+
+|               value|
++--------------------+
+|[AC ED 00 05 73 7...|
+|[AC ED 00 05 73 7...|
+|[AC ED 00 05 73 7...|
++--------------------+
 ```
