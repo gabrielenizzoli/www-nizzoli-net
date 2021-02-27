@@ -85,7 +85,8 @@ public static class WrapperBean implements Serializable {
 ## How all will come together
 
 
-Our Apache Spark Dataset will work properly and it will look like this:
+Our Apache Spark Dataset will work after the problem class is wrappaed in the `WrapperBean` type. 
+A sample code will look like this:
 ```java
 var ds = sparkSession
     .createDataset(List.of(
@@ -95,7 +96,8 @@ var ds = sparkSession
     ), Encoders.javaSerialization(WrapperBean.class));
 ```
 
-It can be properly be encoded/decoded. The downside? The dataset will be a byte array if queried, and it will be be a single column named `value`:
+`DifficultToSerializeClass` will be properly encoded/decoded. 
+The *downside*? The dataset will be a byte array if queried, and it will be be a single column named `value`.
 ```java
 ds.printSchema();
 ds.show();
@@ -113,3 +115,5 @@ root
 |[AC ED 00 05 73 7...|
 +--------------------+
 ```
+
+But a mapper will be able to read it as expected ... TBD
