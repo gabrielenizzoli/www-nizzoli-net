@@ -124,7 +124,10 @@ root
 But a mapper will be able to read it as expected:
 
 ```java
-ds.map((MapFunction<WrapperBean, Integer>)m -> m.getWrappedObject().getValue().length(), Encoders.INT()).show();
+ds.map(
+        (MapFunction<WrapperBean, Integer>)m -> m.getWrappedObject().getValue().length(), 
+        Encoders.INT())
+    .show();
 
 +-----+
 |value|
