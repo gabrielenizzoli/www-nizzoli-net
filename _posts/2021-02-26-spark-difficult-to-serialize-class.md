@@ -103,6 +103,7 @@ ds.printSchema();
 ds.show();
 ```
 
+Output:
 ```
 root
  |-- value: binary (nullable = true)
