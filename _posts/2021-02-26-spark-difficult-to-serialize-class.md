@@ -7,19 +7,21 @@ tags:
   - java
 ---
 
+HAve an issue with moving around an odd class in anApache Spark Dataset? Here is a practical solution!
+
 {% include toc %}
 
 ## Problem
 
-In an Apache Spark Dataset, sometimes you need to carry aroubd a Java Class that is difficlut to serialize (a Proto Object) or that you can't simply modify (since it is part of an external package).
+In an Apache Spark Dataset, sometimes you need to carry around a Java Class that is difficlut to serialize (eg: a Proto Object) or that you can't simply modify (since it is part of an external package).
 You might have tried the Kryo serializer, but with no luck.
-What will help you now is actually the good old Java Serialization, with a littel help from a custom serializer!
+What will help you now is actually the good old Java Serialization, with a little twist!
 
 ## Our Problem class
 
 Let say we have a problem class. 
-This class may be a Proto object class, or something that neither the Kryo nor the Java serializer likes. 
-In our dummy example we will use the following class, and pretend that we can'ty serialize it using Kryo or Java serialization:
+This class may be a Proto object class, or something that neither the Kryo nor the Java Serializer likes. 
+In our dummy example we will use the following class, and pretend that we can't serialize it using Kryo (or Java Serialization):
 ```java
 public class DifficultToSerializeClass {
 
@@ -45,11 +47,11 @@ public class DifficultToSerializeClass {
 ## Workaround
 
 To carry around an unserializable type in a Spark Dataset the only thing we need to do is to use a wrapper.
-The wrapper will take care of transforming our troubled object in a byte array.
+The wrapper will take care of transforming our troubled object to a byte array (and back again).
 This can be achieved by making our wrapper both `Serializable` and also providing 2 methods: `readObject` and `writeObject`. 
-These two methods will be use to run around the default Java Serializer behavior and fully take charge of reading and writing the `DifficultToSerializeClass` type.
+These two methods will be used to run around the default Java Serializer behavior and fully take charge of reading and writing the `DifficultToSerializeClass` type.
 
-Such a wrapper, for our silly example, will look like this:
+Such a wrapper, for our example, will look like this:
 ```java
 public static class WrapperBean implements Serializable {
 
