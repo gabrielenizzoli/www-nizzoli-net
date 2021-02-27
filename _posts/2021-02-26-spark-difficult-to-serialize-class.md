@@ -15,7 +15,7 @@ In an Apache Spark Dataset, sometimes you need to carry aroubd a Java Class that
 You might have tried the Kryo serializer, but with no luck.
 What will help you now is actually the good old Java Serialization, with a littel help from a custom serializer!
 
-### Our Problem class
+## Our Problem class
 
 Let say we have a problem class. 
 This class may be a Proto object class, or something that neither the Kryo nor the Java serializer likes. 
@@ -42,11 +42,12 @@ public class DifficultToSerializeClass {
 }
 ```
 
-### Workaround
+## Workaround
 
 To carry around an unserializable type in a Spark Dataset the only thing we need to do is to use a wrapper.
 The wrapper will take care of transforming our troubled object in a byte array.
-This can be achieved by making our wrapper both `Serializable` and also providing 2 methods: `readObject` and `readObject`. These two methods will be use to run around the default Java Serializer behavior and fully take charge of reading and writing the `DifficultToSerializeClass` type.
+This can be achieved by making our wrapper both `Serializable` and also providing 2 methods: `readObject` and `writeObject`. 
+These two methods will be use to run around the default Java Serializer behavior and fully take charge of reading and writing the `DifficultToSerializeClass` type.
 
 Such a wrapper, for our silly example, will look like this:
 ```java
