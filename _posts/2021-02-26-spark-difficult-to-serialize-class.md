@@ -1,10 +1,11 @@
 ---
-title: "Apache Spark: difficult to serialize Java Class in Dataset"
+title: "Apache Spark: difficult to serialize (Proto) Java Class in a Dataset"
 categories:
   - Code
 tags:
   - spark
   - java
+  - protobuf
 ---
 
 Have an issue with moving around an odd class in an Apache Spark Dataset? Here is a practical solution!
