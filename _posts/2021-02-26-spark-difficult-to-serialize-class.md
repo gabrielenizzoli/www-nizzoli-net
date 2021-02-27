@@ -16,7 +16,10 @@ Have an issue with moving around an odd class in an Apache Spark Dataset? Here i
 
 In an [Apache Spark](https://spark.apache.org/) Dataset sometimes you *must* carry around a Java Class that is impossible to serialize (eg: a Proto Object) or that you can't simply modify (eg: it is part of an external package).
 You might have tried the Kryo serializer, but with no luck.
-What will help you now is actually the good old Java Serialization, with a little twist!
+There are actually 2 solutiosn to this:
+
+* the good old Java Serialization, with a little twist, and
+* an Apache Spark user defined type.
 
 ## Our Problem class
 
@@ -46,7 +49,9 @@ public class DifficultToSerializeClass {
 }
 ```
 
-## Workaround
+## Java Serialization
+
+### The Workaround
 
 To carry around an unserializable type in a Spark Dataset the only thing we need to do is to use a wrapper.
 The wrapper will take care of transforming our troubled object to a byte array (and back again).
@@ -87,7 +92,7 @@ public static class WrapperBean implements Serializable {
 }
 ```
 
-## How it looks in a Dataset
+### How it looks in a Dataset
 
 Our Apache Spark Dataset will work after the problem class is wrappaed in the `WrapperBean` type.
 A sample code will look like this:
@@ -137,3 +142,7 @@ ds.map(
 |    5|
 +-----+
 ```
+
+## Spark USer Defined Type
+
+TBD ...
