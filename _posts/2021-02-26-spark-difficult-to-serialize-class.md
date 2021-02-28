@@ -101,7 +101,7 @@ public static class WrapperBean implements Serializable {
 }
 ```
 
-### How it looks in a Dataset
+### How it works for a Dataset
 
 Our Apache Spark Dataset will finally work after the problem class is wrapped in the `WrapperBean` type.
 A sample code will look like this:
@@ -244,7 +244,7 @@ UDTRegistration.register(
     UDT.class.getName());
 ```
 
-### How it looks in a DataFrame
+### Piecing all the parts together
 
 As expected, the problem class is usable in our `CarrierBean` as a field.  
 But also it is usable in every possible situation where the type is used, since the type is managed directly by Spark.
@@ -292,7 +292,6 @@ root
 |DifficultToSerializeClass{value='one', flag=true}|          1|
 +-------------------------------------------------+-----------+
 only showing top 1 row
-
 ```
 
 And finally, as a bonus, the DataFrame can be converted to a typed Dataset.  
