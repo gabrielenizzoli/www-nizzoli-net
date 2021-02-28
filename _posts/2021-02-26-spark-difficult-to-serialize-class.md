@@ -295,9 +295,8 @@ only showing top 1 row
 
 ```
 
-And finally, as a bonus the DataFrame can be converted to a typed Dataset.  
-And the reason is that the `DifficultToSerializeClass` type is fully managed by Apache Spark, so no additional code is needed.
-The code is:
+And finally, as a bonus, the DataFrame can be converted to a typed Dataset.  
+And the reason is that the `DifficultToSerializeClass` type is fully managed by Apache Spark, so no additional code is needed:
 
 ```java
 ds.as(Encoders.bean(CarrierBean.class)).show();
