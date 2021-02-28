@@ -88,7 +88,8 @@ public static class WrapperBean implements Serializable {
 
     private void writeObject(ObjectOutputStream aOutputStream) 
         throws IOException {
-        // java -> stream, replace your preferred serializer, like a Proto object serializer
+        // java -> stream
+        // replace your preferred serializer, like a Proto object serializer
         aOutputStream.writeUTF(difficultToSerializeObject.getValue());
         aOutputStream.writeBoolean(difficultToSerializeObject.isFlag());
     }
@@ -122,6 +123,8 @@ The *downside*? The dataset will be a byte array if queried, and it will be be a
 ds.printSchema();
 ds.show();
 
+// STDOUT -------------------------
+
 root
  |-- value: binary (nullable = true)
 
@@ -137,10 +140,13 @@ root
 But a mapper will be able to read it as expected:
 
 ```java
-ds.map(
-        (MapFunction<WrapperBean, Integer>)m -> m.getWrappedObject().getValue().length(), 
+ds.map((MapFunction<WrapperBean, Integer>)m -> {
+            return m.getWrappedObject().getValue().length();
+        }, 
         Encoders.INT())
     .show();
+
+// STDOUT -------------------------
 
 +-----+
 |value|
@@ -206,7 +212,7 @@ public class UDT extends UserDefinedType<DifficultToSerializeClass> {
 
 For our convenience, we will also define a new simple type to hold our `DifficultToSerializeClass` object.  
 This wrapper is much simpler than the `WrapperBean` class (defined above) since it will not need to define how we serialize its internal fields.
-This new bean also an advantage: it can define new fields and they will be visible to Spark SQL:
+This new bean also an advantage: it can add new fields and they will be visible to Spark SQL:
 
 ```java
 public class CarrierBean {
@@ -233,7 +239,9 @@ public class CarrierBean {
 The final step is to register the new type in the Spark type registry:
 
 ```java
-UDTRegistration.register(DifficultToSerializeClass.class.getName(), UDT.class.getName());
+UDTRegistration.register(
+    DifficultToSerializeClass.class.getName(), 
+    UDT.class.getName());
 ```
 
 ### How it looks in a DataFrame
@@ -243,7 +251,9 @@ But also it is usable in every possible situation where the type is used, since 
 The integration code will be:
 
 ```java
-UDTRegistration.register(DifficultToSerializeClass.class.getName(), UDT.class.getName());
+UDTRegistration.register(
+    DifficultToSerializeClass.class.getName(), 
+    UDT.class.getName());
 
 var data = List.of(
         new CarrierBean(new DifficultToSerializeClass("one", true), 1L),
@@ -254,13 +264,15 @@ var data = List.of(
 var ds = sparkSession.createDataFrame(data, CarrierBean.class);
 
 ds.map((MapFunction<Row, Integer>)row -> {
-    return row.<DifficultToSerializeClass>getAs("bean").getValue().length();
-}, Encoders.INT()).show();
+            return row.<DifficultToSerializeClass>getAs("bean").getValue().length();
+        }, 
+        Encoders.INT())
+    .show();
 
 ds.printSchema();
-ds.show(10, 200);
+ds.show(1, 200);
 
-// -------------------------
+// STDOUT -------------------------
 
 +-----+
 |value|
@@ -281,4 +293,22 @@ root
 +-------------------------------------------------+-----------+
 only showing top 1 row
 
+```
+
+And finally, as a bonus the DataFrame can be converted to a typed Dataset.  
+And the reason is that the `DifficultToSerializeClass` type is fully managed by Apache Spark, so no additional code is needed.
+The code is:
+
+```java
+ds.as(Encoders.bean(CarrierBean.class)).show();
+
+// STDOUT -------------------------
+
++--------------------+-----------+
+|                bean|longCounter|
++--------------------+-----------+
+|DifficultToSerial...|          1|
+|DifficultToSerial...|          2|
+|DifficultToSerial...|          3|
++--------------------+-----------+
 ```
