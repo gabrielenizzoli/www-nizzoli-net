@@ -1,5 +1,5 @@
 ---
-title: "My home (little) server"
+title: "My (little) home server"
 categories:
   - Hardware
 tags:
