@@ -1,5 +1,5 @@
-title: Gabe on Mars
-description: my (personal) blog
+title: Tech Notes
+description: my (personal) blog about coding - and stuff
 
 remote_theme: "mmistakes/so-simple-theme@3.2.0"
 
@@ -7,7 +7,7 @@ url: "https://www.nizzoli.net"
 copyright: "&copy; me"
 date_format: "%B %-d, %Y"
 skin: "/assets/css/skins/dark.css"
-logo: "/images/mars-logo.png"
+#logo: "/images/mars-logo.png"
 read_time: true
 words_per_minute: # 200
 mathjax:
