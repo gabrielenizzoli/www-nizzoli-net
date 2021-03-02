@@ -13,7 +13,7 @@ The server is currently dual-booting Ubuntu and Win10.
 
 List of component:
 
-* AMD Ryzen 9 3900X 12-core, 24-thread ![right-aligned-image](/images/amd_ryzen.jpg){: .align-right}
+* AMD Ryzen 9 3900X 12-core, 24-thread ![right-aligned-image](/images/amd-ryzen-9.jpg){: .align-right}
 * Sabrent 1TB Rocket NVMe 4.0 Gen4 PCIe M.2 Internal SSD
 * EVGA GeForce RTX 2060 KO GAMING Video Card
 * G.SKILL Ripjaws V Series 64GB (2 x 32GB) 288-Pin DDR4 SDRAM DDR4 3200 (PC4 25600)
