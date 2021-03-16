@@ -7,7 +7,7 @@ tags:
   - java
 ---
 
-A useful trick: to be able to define code at runtime and use it in a scala/java class!
+A useful trick: to be able to compile code at runtime and use its result(s) in a scala/java class!
 
 First we need the proper scala dependencies: 
 
@@ -35,10 +35,9 @@ object ScriptEngine {
 
   val cache = new ConcurrentHashMap[String, Any]();
 
-  def compileTo[T](code: String): T = {
+  def compile(code: String): Any = {
     val toolBox = universe.runtimeMirror(getClass.getClassLoader).mkToolBox()
-    val outcome = toolBox.eval(toolBox.parse(code))
-    outcome.asInstanceOf[T]
+    toolBox.eval(toolBox.parse(code))
   }
 
 }
@@ -47,12 +46,12 @@ object ScriptEngine {
 And finally we can compile and use:
 
 ```scala
-val function = ScriptEngine.compileTo[(Int)=>Int]("(i:Int)=>i+1")
+val function = ScriptEngine.compile("(i:Int)=>i+1").asInstanceOf[(Int)=>Int]
 // evaluates to 2!
 val outcome = function(1)
 ```
 
 And that is it :)
 
-NOTE: output object can't be used in a serializer/deserializer process, since class in not (usually) available in deserializer class loader (class is defined in the script, into its own class loader).
+*NOTE: output object can't be used in a serializer/deserializer process, since class in not (usually) available in deserializer class loader (class is defined in the script, into its own class loader).*
 
