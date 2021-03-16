@@ -47,7 +47,7 @@ And finally we can compile and use:
 
 ```java
 val function = ScriptEngine.compileTo[(Int)=>Int]("(i:Int)=>i+1")
-// elavuates to 2!
+// evaluates to 2!
 val outcome = function(1)
 ```
 
