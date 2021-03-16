@@ -1,9 +1,10 @@
 ---
 title: "Compile scala script at runtime"
 categories:
-  - Software
+  - Code
 tags:
   - scala
+  - java
 ---
 
 A useful trick: to be able to define code at runtime and use it in a scala/java class!
