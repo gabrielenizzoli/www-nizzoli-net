@@ -8,7 +8,7 @@ tags:
 
 A useful trick: to be able to define code at runtime and use it in a scala/java class!
 
-First we need our code to have the proper scala packages: 
+First we need the proper scala dependencies: 
 
 ```xml
 <dependencies>
@@ -23,7 +23,7 @@ First we need our code to have the proper scala packages:
 </dependencies>
 ```
 
-Then we need to have a compiler utility:
+Then we need to have a compiler utility (written in scala):
 
 ```scala
 import java.util.concurrent.ConcurrentHashMap
@@ -45,7 +45,7 @@ object ScriptEngine {
 
 And finally we can compile and use:
 
-```java
+```scala
 val function = ScriptEngine.compileTo[(Int)=>Int]("(i:Int)=>i+1")
 // evaluates to 2!
 val outcome = function(1)
